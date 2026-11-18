@@ -128,9 +128,12 @@ test('los códigos son aleatorios, de 8 caracteres y sin letras confusas', () =>
   assert.equal(codes.size, 20000, 'sin repetidos');
 });
 
-test('números de WhatsApp: Colombia lleva 57, el resto se deja igual', () => {
+test('números de WhatsApp: Colombia lleva 57, Costa Rica 506, el resto se deja igual', () => {
   assert.equal(ctx.numeroWhatsApp_('3001234567'), '573001234567');
   assert.equal(ctx.numeroWhatsApp_(3001234567), '573001234567');
   assert.equal(ctx.numeroWhatsApp_('50660001111'), '50660001111');
+  assert.equal(ctx.numeroWhatsApp_(50660001111), '50660001111', 'escrito con "+" Sheets lo vuelve número');
+  assert.equal(ctx.numeroWhatsApp_('6000 1111'), '50660001111', 'Costa Rica sin 506');
+  assert.equal(ctx.numeroWhatsApp_('+506 6000-1111'), '50660001111');
   assert.equal(ctx.numeroWhatsApp_(''), '');
 });

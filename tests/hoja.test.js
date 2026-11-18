@@ -47,15 +47,19 @@ test('generar links: un código único por persona, link y botón de WhatsApp', 
     // Texto con link, sin fórmula (las fórmulas fallan según el idioma de la hoja).
     assert.equal(typeof row[5], 'object');
     assert.ok(!String(row[5].text).startsWith('='), 'no es fórmula');
-    assert.match(row[5].url, /^https:\/\/wa\.me\/\d*\?text=/);
+    // api.whatsapp.com (no wa.me: su redirección rompe los emojis)
+    assert.match(row[5].url, /^https:\/\/api\.whatsapp\.com\/send\?(phone=\d+&)?text=/);
   }
-  assert.match(r[0][5].url, /wa\.me\/573001234567\?text=/, 'Colombia con 57');
+  assert.match(r[0][5].url, /send\?phone=573001234567&text=/, 'Colombia con 57');
   assert.equal(r[0][5].text, '📲 Enviar');
-  assert.match(r[2][5].url, /wa\.me\/50660001111\?text=/, 'Costa Rica tal cual');
-  assert.match(r[1][5].url, /wa\.me\/\?text=/, 'sin teléfono: elegir contacto');
+  assert.match(r[2][5].url, /send\?phone=50660001111&text=/, 'Costa Rica tal cual');
+  assert.match(r[1][5].url, /send\?text=/, 'sin teléfono: elegir contacto');
   assert.equal(r[1][5].text, '📲 Elegir a quién');
   const msg = decodeURIComponent(r[0][5].url.split('text=')[1]);
-  assert.match(msg, /Hola Ana/);
+  assert.match(msg, /¡Hola, Ana!/);
+  assert.match(msg, /Amigo Secreto en Familia “Los Melvos”/);
+  assert.ok(msg.includes('🎄') && msg.includes('🎁') && msg.includes('🤫'), 'emojis intactos');
+  assert.ok(!msg.includes('�'), 'sin caracteres rotos');
   assert.ok(msg.includes(r[0][4]), 'el mensaje lleva SU link');
   assert.match(g.alerts.at(-1).title, /Links listos/);
 });
@@ -247,5 +251,5 @@ test('caso real: la columna WhatsApp tenía fórmulas con #ERROR! y se vuelve a 
   g.byHand(() => g.sheet().getRange(2, 6, 4, 1).setValues([['=HYPERLINK(x)'], ['=HYPERLINK(x)'], ['=HYPERLINK(x)'], ['=HYPERLINK(x)']]));
   g.ctx.generarLinks();
   assert.deepEqual(codes(g), before, 'los códigos y links no cambian');
-  assert.ok(rows(g).every((r) => typeof r[5] === 'object' && /^https:\/\/wa\.me\//.test(r[5].url)));
+  assert.ok(rows(g).every((r) => typeof r[5] === 'object' && /^https:\/\/api\.whatsapp\.com\/send\?/.test(r[5].url)));
 });

@@ -16,6 +16,7 @@
 
 // ========================= CONFIGURA AQUÍ =========================
 var TITULO = 'Amigo Secreto en Familia';
+var FAMILIA = 'Los Melvos'; // sale en el mensaje de WhatsApp ('' para quitarlo)
 var URL_PAGINA = 'https://jhonjpineda.github.io/secret-friend/';
 // ==================================================================
 
@@ -519,23 +520,33 @@ function nuevoCodigo_() {
 function numeroWhatsApp_(telefono) {
   var d = soloDigitos_(telefono);
   if (!d) return '';
-  return d.length === 10 && d.charAt(0) === '3' ? '57' + d : d; // celular de Colombia
+  if (d.length === 10 && d.charAt(0) === '3') return '57' + d; // celular de Colombia
+  if (d.length === 8) return '506' + d; // Costa Rica (8 dígitos)
+  return d;
 }
 
 function mensajeWhatsApp_(nombre, link) {
+  var nombreJuego = TITULO + (FAMILIA ? ' “' + FAMILIA + '”' : '');
   return (
-    'Hola ' + nombre.split(' ')[0] + ' 🎁\n' +
-    '¡Llegó el *' + TITULO + '*!\n\n' +
-    'Este es TU link personal (es solo tuyo, no lo reenvíes):\n' + link + '\n\n' +
-    'Ábrelo, toca el botón y descubre a quién le vas a regalar. 🤫 ¡Es secreto!'
+    '🎄✨ *¡Hola, ' + nombre.split(' ')[0] + '!* ✨🎄\n\n' +
+    '¡Llegó la época más bonita del año! 🎅 Y con ella, nuestro *' + nombreJuego + '* 🎁\n\n' +
+    'Este es *tu link personal* 👇\n' + link + '\n\n' +
+    '🎁 Ábrelo, toca el botón *"Encuentra a tu amigo secreto"* y descubre a quién le vas a dar regalo esta Navidad.\n\n' +
+    '🤫 *Recuerda:*\n' +
+    '• Es *secreto*: no le cuentes a nadie quién te salió.\n' +
+    '• El link es *solo tuyo*, no lo reenvíes.\n' +
+    '• Si se te olvida, vuelve a abrirlo: siempre te mostrará el mismo.\n\n' +
+    '¡Que viva la Navidad en familia! ❤️⭐'
   );
 }
 
 function enlaceWhatsApp_(nombre, telefono, link) {
   var numero = numeroWhatsApp_(telefono);
+  // api.whatsapp.com y no wa.me: la redirección de wa.me cambia los emojis por "�".
   return {
     texto: numero ? '📲 Enviar' : '📲 Elegir a quién',
-    url: 'https://wa.me/' + numero + '?text=' + encodeURIComponent(mensajeWhatsApp_(nombre, link)),
+    url: 'https://api.whatsapp.com/send?' + (numero ? 'phone=' + numero + '&' : '') +
+      'text=' + encodeURIComponent(mensajeWhatsApp_(nombre, link)),
   };
 }
 
