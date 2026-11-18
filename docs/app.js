@@ -24,22 +24,20 @@
     return a;
   }
 
-  // Llamadas a la hoja (Google Apps Script). Sin encabezados especiales para que
-  // el navegador no bloquee la petición entre dominios.
-  async function api(params, { post = false } = {}) {
+  // Llamadas a la hoja (Google Apps Script). Siempre por POST: Google rechaza
+  // (error 400) las URLs de Apps Script que llevan el parámetro "c". Se envía como
+  // text/plain para que el navegador no bloquee la petición entre dominios.
+  async function api(params) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 40000);
     let data;
     try {
-      const sep = API.includes('?') ? '&' : '?';
-      const res = post
-        ? await fetch(API, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(params),
-            signal: ctrl.signal,
-          })
-        : await fetch(`${API}${sep}${new URLSearchParams(params)}`, { signal: ctrl.signal });
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(params),
+        signal: ctrl.signal,
+      });
       data = await res.json();
     } catch {
       const err = new Error('No pudimos conectarnos. Revisa tu internet e intenta de nuevo.');
@@ -125,7 +123,7 @@
     $('shuffle').hidden = false;
 
     // La petición sale de inmediato; la animación solo es para dar emoción.
-    const request = api({ action: 'draw', c: CODE }, { post: true });
+    const request = api({ action: 'draw', c: CODE });
     const others = info.names.filter((n) => n !== info.name);
     const anim = runShuffle(shuffled(others.length ? others : ['🎁']));
 
