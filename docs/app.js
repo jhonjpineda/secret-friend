@@ -92,7 +92,11 @@
       return showError(err);
     }
     $('title').textContent = info.title;
-    document.title = `${info.title} · ${info.name}`;
+    // Cinta con el nombre de la familia; se oculta si el título de la hoja ya lo trae.
+    const family = $('family');
+    const familyName = family ? family.textContent.replace(/[“”"]/g, '').trim() : '';
+    if (familyName && info.title.toLowerCase().includes(familyName.toLowerCase())) family.hidden = true;
+    document.title = `${info.title}${family && !family.hidden ? ` “${familyName}”` : ''} · ${info.name}`;
     document.querySelectorAll('.js-name').forEach((el) => { el.textContent = info.name; });
 
     if (info.drawn) return showResult(info.recipient, { covered: true, already: true });

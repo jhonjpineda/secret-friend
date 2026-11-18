@@ -142,6 +142,43 @@ body {
   text-shadow: 0 3px 0 var(--red-dark), 0 0 22px rgba(242, 193, 78, 0.35);
   overflow-wrap: anywhere;
 }
+/* cinta roja con el nombre de la familia */
+.family { margin: 4px 0 0; }
+.family span {
+  position: relative;
+  display: inline-block;
+  padding: 3px 24px 6px;
+  font-family: 'Mountains of Christmas', 'Baloo 2', cursive;
+  font-weight: 700;
+  font-size: clamp(26px, 7.4vw, 34px);
+  line-height: 1.1;
+  color: var(--gold-soft);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+  background: linear-gradient(180deg, var(--red-hi), var(--red-dark));
+  border-top: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+.family span::before, .family span::after { /* puntas de la cinta */
+  content: '';
+  position: absolute;
+  top: 9px;
+  bottom: -9px;
+  width: 22px;
+  z-index: -1;
+  background: #7d0719;
+}
+.family span::before {
+  left: -16px;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 42% 50%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 42% 50%);
+}
+.family span::after {
+  right: -16px;
+  -webkit-clip-path: polygon(0 0, 100% 0, 58% 50%, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 58% 50%, 100% 100%, 0 100%);
+}
+
 .countdown {
   display: inline-block;
   margin: 12px 0 0;
@@ -420,6 +457,7 @@ p { margin: 0 0 10px; }
   .kicker { margin-top: 4px; font-size: 12px; }
   .brand { margin-bottom: 22px; }
   .brand h1 { font-size: clamp(30px, 8.8vw, 46px); }
+  .family span { font-size: clamp(22px, 6.6vw, 30px); padding: 2px 22px 4px; }
   .countdown { margin-top: 8px; padding: 3px 14px; font-size: 13px; }
   .sky::after { top: 58px; width: 30px; height: 30px; }
   .card { padding-top: 30px; }
