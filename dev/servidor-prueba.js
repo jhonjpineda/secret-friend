@@ -46,6 +46,8 @@ function sendJson(res, text) {
   res.end(text);
 }
 
+const fallas = { busy: Number(process.env.FALLAS_BUSY) || 0, e500: Number(process.env.FALLAS_500) || 0 };
+
 http.createServer((req, res) => {
   const url = new URL(req.url, BASE);
 
@@ -54,6 +56,18 @@ http.createServer((req, res) => {
       let body = '';
       req.on('data', (c) => { body += c; });
       req.on('end', () => {
+        // Simulación de fallas pasajeras de Google (para probar los reintentos):
+        //   FALLAS_BUSY=n  -> los primeros n sorteos responden "ocupado"
+        //   FALLAS_500=n   -> los primeros n sorteos responden error 500 (HTML)
+        if (/"draw"/.test(body) && fallas.busy > 0) {
+          fallas.busy--;
+          return setTimeout(() => sendJson(res, JSON.stringify({ ok: false, code: 'BUSY', error: 'Ocupado (simulado)' })), 800);
+        }
+        if (/"draw"/.test(body) && fallas.e500 > 0) {
+          fallas.e500--;
+          res.writeHead(500, { 'Content-Type': 'text/html' });
+          return res.end('<html><body>Error del servidor (simulado)</body></html>');
+        }
         setTimeout(() => sendJson(res, g.ctx.doPost({ postData: { contents: body } }).getContent()), 600); // simula la demora de Google
       });
       return;

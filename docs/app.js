@@ -54,6 +54,24 @@
     return data;
   }
 
+  // Reintenta solo errores pasajeros (Google ocupado, error 500, sin señal).
+  // Es seguro repetir "sacar": si un intento anterior sí quedó guardado, la hoja
+  // devuelve el MISMO resultado, nunca uno nuevo.
+  const TRANSIENT = new Set(['BUSY', 'INTERNAL', 'NETWORK']);
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  async function apiWithRetry(params, { attempts, onRetry }) {
+    for (let i = 1; ; i++) {
+      try {
+        return await api(params);
+      } catch (err) {
+        if (!TRANSIENT.has(err.code) || i >= attempts) throw err;
+        if (onRetry) onRetry(i);
+        await wait(1500 + Math.random() * 2500); // espera al azar para no chocar otra vez
+      }
+    }
+  }
+
   function showError(err) {
     if (err.code === 'INVALID_CODE') return show('invalid');
     if (err.code === 'NO_CODE') return show('nolink');
@@ -69,7 +87,7 @@
     if (!CODE) return show('nolink');
     show('loading');
     try {
-      info = await api({ action: 'info', c: CODE });
+      info = await apiWithRetry({ action: 'info', c: CODE }, { attempts: 3 });
     } catch (err) {
       return showError(err);
     }
@@ -99,19 +117,22 @@
     let timer = null;
     let stopped = false;
 
-    const done = new Promise((resolve) => {
-      const tick = () => {
-        if (stopped) return resolve();
-        label.textContent = names[i++ % names.length];
-        card.classList.remove('tick');
-        void card.offsetWidth; // reinicia la animación
-        card.classList.add('tick');
-        delay *= 1.085;
-        if (delay > 480) return resolve();
-        timer = setTimeout(tick, delay);
-      };
-      tick();
-    });
+    // Baraja rápido y va frenando (~4 s). Si la hoja aún no responde, sigue
+    // barajando a ritmo lento hasta que llegue la respuesta: nunca se queda
+    // quieta en un nombre que no es el resultado.
+    let markDone;
+    const done = new Promise((resolve) => { markDone = resolve; });
+    const tick = () => {
+      if (stopped) return;
+      label.textContent = names[i++ % names.length];
+      card.classList.remove('tick');
+      void card.offsetWidth; // reinicia la animación
+      card.classList.add('tick');
+      if (delay < 380) delay *= 1.085;
+      else markDone();
+      timer = setTimeout(tick, delay);
+    };
+    tick();
     return { done, stop: () => { stopped = true; clearTimeout(timer); } };
   }
 
@@ -123,7 +144,12 @@
     $('shuffle').hidden = false;
 
     // La petición sale de inmediato; la animación solo es para dar emoción.
-    const request = api({ action: 'draw', c: CODE });
+    const label = $('shuffle-label');
+    label.textContent = 'Barajando nombres…';
+    const request = apiWithRetry({ action: 'draw', c: CODE }, {
+      attempts: 6,
+      onRetry: () => { label.textContent = 'Hay mucha gente sacando al mismo tiempo… seguimos barajando 🎲'; },
+    });
     const others = info.names.filter((n) => n !== info.name);
     const anim = runShuffle(shuffled(others.length ? others : ['🎁']));
 
@@ -134,7 +160,10 @@
       anim.stop();
       return showError(err);
     }
-    showResult(result.recipient, { fresh: !result.already, covered: false, already: result.already });
+    anim.stop();
+    // Acaba de tocar el botón: se le revela, aunque un reintento haya encontrado
+    // su resultado ya guardado (mismo amigo secreto).
+    showResult(result.recipient, { fresh: true });
   }
 
   // ------------------------------------------------------------ resultado
