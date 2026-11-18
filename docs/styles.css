@@ -1,6 +1,6 @@
 :root {
-  --bg: #0b1626;
-  --bg-2: #15294a;
+  --bg: #0a1a2f;
+  --bg-2: #14294a;
   --card: #fffaf2;
   --ink: #1f2430;
   --muted: #6b6f7b;
@@ -11,8 +11,13 @@
   --green: #1f6f4a;
   --green-hi: #2a8f60;
   --gold: #f2c14e;
+  --gold-soft: #ffe7a3;
+  --snow: #eef4fb;
   --radius: 22px;
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  /* moño dorado y ramita de acebo (SVG) */
+  --bow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Cpath d='M28 20 16 36 21 35 23 39 31 21zM32 20 44 36 39 35 37 39 29 21z' fill='%23d99a22'/%3E%3Cpath d='M30 18C22 4 6 2 6 12s16 10 24 6zM30 18C38 4 54 2 54 12s-16 10-24 6z' fill='%23f2c14e' stroke='%23b9831c' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='30' cy='18' r='5' fill='%23ffd768' stroke='%23b9831c' stroke-width='2'/%3E%3C/svg%3E");
+  --holly: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 54'%3E%3Cpath d='M35 26C28 15 16 9 3 13c5 3 4 7 2 10 5 0 7 3 7 7 5-2 9 0 11 4 3-4 7-6 12-8z' fill='%231f6f4a'/%3E%3Cpath d='M35 26C42 14 54 9 67 15c-5 3-4 7-2 10-5 0-7 3-7 7-5-2-9 0-11 4-3-4-7-6-12-10z' fill='%23185c3c'/%3E%3Cpath d='M35 26 6 14M35 26l29-10' stroke='%232fa36d' stroke-width='1.2' fill='none'/%3E%3Ccircle cx='30' cy='30' r='5.5' fill='%23d4142f'/%3E%3Ccircle cx='40' cy='30' r='5.5' fill='%23c20f29'/%3E%3Ccircle cx='35' cy='22' r='5.5' fill='%23e01e3c'/%3E%3Ccircle cx='33' cy='20' r='1.6' fill='%23fff' fill-opacity='.7'/%3E%3Ccircle cx='28' cy='28' r='1.6' fill='%23fff' fill-opacity='.7'/%3E%3Ccircle cx='38' cy='28' r='1.6' fill='%23fff' fill-opacity='.7'/%3E%3C/svg%3E");
   color-scheme: light;
 }
 
@@ -21,11 +26,13 @@ html, body { margin: 0; }
 [hidden] { display: none !important; }
 
 body {
+  position: relative;
   min-height: 100vh;
   min-height: 100dvh;
   background-color: var(--bg);
   background-image:
-    radial-gradient(900px 500px at 50% -8%, #2a4d7c 0%, transparent 65%),
+    radial-gradient(640px 380px at 50% -4%, rgba(242, 193, 78, 0.16) 0%, transparent 60%),
+    radial-gradient(900px 520px at 50% -8%, #2a4d7c 0%, transparent 65%),
     linear-gradient(180deg, var(--bg-2), var(--bg) 70%);
   background-attachment: fixed;
   color: var(--ink);
@@ -41,43 +48,131 @@ body {
   z-index: 1;
   max-width: 520px;
   margin: 0 auto;
-  padding: 28px 16px 40px;
+  padding: 58px 16px 150px;
+}
+
+/* ---------- cielo, paisaje y luces ---------- */
+.sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.sky::after { /* luna */
+  content: '';
+  position: absolute;
+  top: 70px;
+  right: 9%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 9px 5px 0 0 #fdf1c7;
+  filter: drop-shadow(0 0 10px rgba(253, 241, 199, 0.55));
+  transform: rotate(-12deg);
+}
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.ground { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; pointer-events: none; z-index: 0; }
+.ground svg { display: block; width: 100%; height: 100%; }
+
+.lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='24'%3E%3Cpath d='M0 3Q28 27 56 3' fill='none' stroke='%23314e3b' stroke-width='2.5'/%3E%3C/svg%3E") repeat-x;
+}
+.lights i {
+  position: absolute;
+  top: 18px;
+  width: 12px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 3px 14px 3px var(--c);
+  animation: bulb 1.6s ease-in-out infinite;
+}
+.lights i::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 2px;
+  width: 8px;
+  height: 7px;
+  border-radius: 2px;
+  background: #2f3d34;
 }
 
 /* ---------- encabezado ---------- */
-.brand { text-align: center; color: #fff; margin-bottom: 18px; }
-.brand-gift {
-  font-size: 54px;
-  line-height: 1;
-  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
-  animation: bob 3s ease-in-out infinite;
+.brand { text-align: center; color: #fff; margin-bottom: 26px; }
+.tree {
+  display: block;
+  width: 96px;
+  height: auto;
+  margin: 0 auto;
+  overflow: visible;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45));
+}
+.tree-glow { animation: glow 2.2s ease-in-out infinite; }
+.tree-lights { animation: chase 1.2s linear infinite; }
+.orn { animation: twinkle 1.8s ease-in-out infinite; }
+.orn.o2 { animation-delay: 0.6s; }
+.orn.o3 { animation-delay: 1.2s; }
+
+.kicker {
+  margin: 8px 0 0;
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 .brand h1 {
-  font-family: 'Baloo 2', 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: clamp(30px, 8vw, 42px);
-  line-height: 1.1;
-  margin: 8px 0 0;
-  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
+  font-family: 'Mountains of Christmas', 'Baloo 2', cursive;
+  font-weight: 700;
+  font-size: clamp(38px, 11vw, 56px);
+  line-height: 1.05;
+  margin: 2px 0 0;
+  text-shadow: 0 3px 0 var(--red-dark), 0 0 22px rgba(242, 193, 78, 0.35);
   overflow-wrap: anywhere;
+}
+.countdown {
+  display: inline-block;
+  margin: 12px 0 0;
+  padding: 5px 16px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(242, 193, 78, 0.5);
+  color: var(--gold-soft);
+  font-weight: 700;
+  font-size: 14px;
 }
 
 /* ---------- tarjetas ---------- */
 .card {
   position: relative;
-  background: var(--card);
+  background:
+    repeating-linear-gradient(45deg, var(--red) 0 12px, #fff 12px 24px) top / 100% 8px no-repeat,
+    var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 30px 20px 24px;
-  overflow: hidden;
+  padding: 34px 20px 24px;
   margin-bottom: 18px;
 }
-.card::before {
+.card::after { /* ramita de acebo en la esquina */
   content: '';
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 7px;
-  background: repeating-linear-gradient(45deg, var(--red) 0 12px, #fff 12px 24px);
+  top: -20px;
+  right: -8px;
+  width: 58px;
+  height: 46px;
+  background: var(--holly) center / contain no-repeat;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
 }
 .center { text-align: center; }
 .screen { animation: enter 0.35s ease-out; }
@@ -93,28 +188,37 @@ p { margin: 0 0 10px; }
 .small { font-size: 14px; }
 .hello { font-size: 20px; margin-bottom: 12px; overflow-wrap: anywhere; }
 .secret { font-weight: 800; font-size: 17px; }
+.xmas-wish { color: var(--green); font-weight: 800; font-size: 17px; margin-bottom: 6px; }
 
-/* ---------- progreso ---------- */
+/* ---------- progreso (bastón de caramelo) ---------- */
 .progress { margin: 18px 0 0; }
-.progress-bar { height: 8px; background: #efe5d6; border-radius: 99px; overflow: hidden; }
+.progress-bar {
+  height: 10px;
+  background: #efe5d6;
+  border-radius: 99px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+}
 .progress-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, var(--green), var(--green-hi));
+  background: linear-gradient(45deg, var(--red) 25%, #fff 25% 50%, var(--red) 50% 75%, #fff 75%) 0 0 / 16px 16px;
   border-radius: 99px;
   transition: width 0.6s ease;
+  animation: candy 1s linear infinite;
 }
 .progress-text { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
 
 /* ---------- botones ---------- */
 .gift-btn {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   width: 100%;
-  margin: 22px 0 8px;
-  padding: 20px 18px 22px;
+  margin: 34px 0 8px;
+  padding: 22px 18px 22px;
   font-family: 'Baloo 2', 'Nunito', sans-serif;
   font-weight: 800;
   font-size: 22px;
@@ -123,13 +227,28 @@ p { margin: 0 0 10px; }
   background: linear-gradient(180deg, var(--red-hi), var(--red-dark));
   border: none;
   border-radius: 20px;
-  box-shadow: 0 8px 0 #6b0716, 0 18px 30px rgba(150, 9, 31, 0.35);
+  box-shadow: inset 0 0 0 3px rgba(242, 193, 78, 0.55), 0 8px 0 #6b0716, 0 18px 30px rgba(150, 9, 31, 0.35);
   cursor: pointer;
   animation: pulse 1.8s ease-in-out infinite;
   -webkit-tap-highlight-color: transparent;
 }
+.gift-btn::before { /* moño del regalo */
+  content: '';
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  width: 66px;
+  height: 44px;
+  transform: translateX(-50%);
+  background: var(--bow) center / contain no-repeat;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
+}
 .gift-btn-icon { font-size: 34px; }
-.gift-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #6b0716, 0 6px 12px rgba(150, 9, 31, 0.3); animation: none; }
+.gift-btn:active {
+  transform: translateY(6px);
+  box-shadow: inset 0 0 0 3px rgba(242, 193, 78, 0.55), 0 2px 0 #6b0716, 0 6px 12px rgba(150, 9, 31, 0.3);
+  animation: none;
+}
 .gift-btn:disabled { opacity: 0.7; cursor: default; animation: none; }
 .gift-btn:focus-visible, .secondary-btn:focus-visible, .reveal-card:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
@@ -156,6 +275,7 @@ p { margin: 0 0 10px; }
 .shuffle { margin-top: 8px; }
 .shuffle-label { margin-bottom: 14px; }
 .shuffle-card, .reveal-card {
+  position: relative;
   width: 100%;
   min-height: 150px;
   display: grid;
@@ -170,9 +290,12 @@ p { margin: 0 0 10px; }
   overflow-wrap: anywhere;
 }
 .shuffle-card {
-  background: linear-gradient(135deg, var(--green-hi), #12462f);
   color: #fff;
-  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.15), 0 12px 30px rgba(18, 70, 47, 0.35);
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.22) 0 1.5px, transparent 2.5px) 0 0 / 26px 26px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.14) 0 1px, transparent 2px) 13px 13px / 26px 26px,
+    linear-gradient(135deg, var(--green-hi), #12462f);
+  box-shadow: inset 0 0 0 4px rgba(242, 193, 78, 0.45), 0 12px 30px rgba(18, 70, 47, 0.35);
 }
 .shuffle-card.tick span { display: inline-block; animation: tick 0.16s ease-out; }
 .dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
@@ -188,23 +311,67 @@ p { margin: 0 0 10px; }
   box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--gold), 0 16px 40px rgba(242, 193, 78, 0.45);
   cursor: default;
 }
+.reveal-card::before, .reveal-card::after { /* destellos */
+  content: '✦';
+  position: absolute;
+  font-size: 22px;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+  animation: twinkle 1.6s ease-in-out infinite;
+}
+.reveal-card::before { top: 12px; left: 16px; }
+.reveal-card::after { bottom: 12px; right: 16px; animation-delay: 0.8s; }
 .reveal-card.pop { animation: pop 0.8s cubic-bezier(0.2, 1.5, 0.4, 1); }
+
+/* tapado: un regalo envuelto con cinta y moño */
 .reveal-card.covered {
   cursor: pointer;
+  min-height: 170px;
+  place-items: end center;
+  padding-bottom: 18px;
   color: #fff;
-  font-size: 22px;
-  background: repeating-linear-gradient(45deg, var(--red) 0 18px, var(--red-dark) 18px 36px);
+  font-size: 20px;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 9px), var(--gold) calc(50% - 9px) calc(50% + 9px), transparent calc(50% + 9px)),
+    linear-gradient(180deg, transparent calc(38% - 8px), var(--gold) calc(38% - 8px) calc(38% + 8px), transparent calc(38% + 8px)),
+    repeating-linear-gradient(45deg, var(--red) 0 18px, var(--red-dark) 18px 36px);
   box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--red), 0 16px 40px rgba(150, 9, 31, 0.35);
+}
+.reveal-card.covered::before {
+  content: '';
+  top: 38%;
+  left: 50%;
+  width: 84px;
+  height: 56px;
+  transform: translate(-50%, -62%);
+  background: var(--bow) center / contain no-repeat;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
+  text-shadow: none;
+  animation: none;
+}
+.reveal-card.covered::after { content: none; }
+.cover-text {
+  position: relative;
+  display: inline-block;
+  padding: 6px 16px 8px;
+  border-radius: 99px;
+  background: var(--red-dark);
+  box-shadow: 0 0 0 2px var(--gold);
 }
 
 /* ---------- varios ---------- */
 .spinner {
-  width: 42px; height: 42px; margin: 6px auto 12px;
-  border-radius: 50%;
-  border: 5px solid var(--line);
-  border-top-color: var(--red);
-  animation: spin 0.9s linear infinite;
+  width: 48px;
+  height: 48px;
+  margin: 4px auto 12px;
+  font-size: 44px;
+  line-height: 48px;
+  text-align: center;
+  color: #6aa7d8;
+  animation: spin 2.4s linear infinite;
 }
+.spinner::before { content: '\2744\FE0E'; }
 .foot { text-align: center; color: #9fb0c9; font-size: 13px; margin-top: 8px; }
 
 #confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
@@ -212,26 +379,32 @@ p { margin: 0 0 10px; }
 .snow { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .flake {
   position: absolute;
-  top: -12px;
+  top: -20px;
   border-radius: 50%;
   background: #fff;
   animation-name: fall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
+.flake-glyph { background: none; color: #fff; line-height: 1; }
 
-@keyframes fall { to { transform: translate3d(var(--drift, 20px), 105vh, 0); } }
-@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-6px) rotate(4deg); } }
+@keyframes fall { to { transform: translate3d(var(--drift, 20px), 105vh, 0) rotate(240deg); } }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025); } }
 @keyframes tick { from { transform: translateY(-40%) scale(0.9); opacity: 0.2; } to { transform: none; opacity: 1; } }
 @keyframes pop { 0% { transform: rotateY(90deg) scale(0.6); } 100% { transform: none; } }
 @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes blink { 0%, 100% { opacity: 0.25; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes bulb { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@keyframes glow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes chase { to { stroke-dashoffset: -12; } }
+@keyframes candy { to { background-position: 16px 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   .snow { display: none; }
-  .brand-gift, .gift-btn, .screen, .reveal-card.pop { animation: none; }
+  .gift-btn, .screen, .reveal-card.pop, .star, .lights i, .tree-glow, .tree-lights, .orn,
+  .progress-fill, .reveal-card::before, .reveal-card::after { animation: none; }
 }
 
 @media (max-width: 360px) {

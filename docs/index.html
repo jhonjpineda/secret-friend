@@ -3,25 +3,98 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Amigo Secreto</title>
-  <meta name="description" content="Abre tu link personal y descubre a quién le vas a regalar.">
+  <title>Amigo Secreto de Navidad</title>
+  <meta name="description" content="Abre tu link personal y descubre a quién le vas a regalar esta Navidad.">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#0b1626">
-  <meta property="og:title" content="🎁 Amigo Secreto">
-  <meta property="og:description" content="Abre tu link personal y descubre a quién le vas a regalar.">
+  <meta name="theme-color" content="#0a1a2f">
+  <meta property="og:title" content="🎄 Amigo Secreto de Navidad">
+  <meta property="og:description" content="Abre tu link personal y descubre a quién le vas a regalar esta Navidad.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;700;800&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Decoración: cielo con estrellas y luna, paisaje nevado, nieve y guirnalda de luces -->
+  <div class="sky" aria-hidden="true"></div>
+  <div class="ground" aria-hidden="true">
+    <svg focusable="false">
+      <defs>
+        <g id="pino">
+          <path d="M0-42 9-28H5l8 13H7l9 15h-32l9-15h-6l8-13h-4z" fill="#123a28"/>
+          <path d="M0-42 5-34 2-33 0-35-2-33-5-34z" fill="#eef4fb"/>
+        </g>
+        <pattern id="paisaje" width="400" height="120" patternUnits="userSpaceOnUse">
+          <path d="M0 72C40 72 70 46 120 48S220 72 270 62S370 72 400 72V120H0z" fill="#b9cce3"/>
+          <use href="#pino" transform="translate(98 52) scale(.7)"/>
+          <use href="#pino" transform="translate(122 52) scale(.95)"/>
+          <use href="#pino" transform="translate(146 54) scale(.6)"/>
+          <use href="#pino" transform="translate(262 66) scale(.75)"/>
+          <use href="#pino" transform="translate(288 63) scale(.55)"/>
+          <path d="M0 96C50 96 90 80 150 82S260 100 310 94S380 96 400 96V120H0z" fill="#eef4fb"/>
+          <use href="#pino" transform="translate(36 98) scale(1.05)"/>
+          <use href="#pino" transform="translate(352 96) scale(.9)"/>
+          <!-- muñeco de nieve -->
+          <g transform="translate(200 0)">
+            <path d="M-7 66l-9-7M7 66l9-7" stroke="#5a3a22" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cy="82" r="10" fill="#fff" stroke="#c3d2e4"/>
+            <circle cy="67" r="7.5" fill="#fff" stroke="#c3d2e4"/>
+            <circle cy="55" r="5.5" fill="#fff" stroke="#c3d2e4"/>
+            <circle cy="65" r=".9" fill="#1d2430"/>
+            <circle cy="69" r=".9" fill="#1d2430"/>
+            <path d="M-6 59.5h12v3h-12zM3 61l2.5 6.5h-3z" fill="#c8102e"/>
+            <path d="M-6 49h12v2h-12zM-4 41h8v9h-8z" fill="#1d2430"/>
+            <path d="M0 55l6 1.2-6 1z" fill="#f08a24"/>
+            <circle cx="-2" cy="53.5" r=".9" fill="#1d2430"/>
+            <circle cx="2" cy="53.5" r=".9" fill="#1d2430"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#paisaje)"/>
+    </svg>
+  </div>
   <div class="snow" aria-hidden="true"></div>
+  <div class="lights" aria-hidden="true"></div>
 
   <main class="app">
     <header class="brand">
-      <div class="brand-gift" aria-hidden="true">🎁</div>
+      <svg class="tree" viewBox="0 0 120 130" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="brillo">
+            <stop offset="0" stop-color="#fff3b0" stop-opacity=".95"/>
+            <stop offset="1" stop-color="#f2c14e" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle class="tree-glow" cx="60" cy="18" r="22" fill="url(#brillo)"/>
+        <rect x="53" y="106" width="14" height="16" rx="2" fill="#7a4a22"/>
+        <path d="M60 58 106 110H14z" fill="#1c6b45" stroke="#1c6b45" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M60 40 94 82H26z" fill="#23804f" stroke="#23804f" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M60 24 84 56H36z" fill="#2a8f60" stroke="#2a8f60" stroke-width="6" stroke-linejoin="round"/>
+        <g class="tree-lights" fill="none" stroke="#ffe7a3" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0 6">
+          <path d="M46 44Q60 54 74 42"/>
+          <path d="M38 66Q62 82 86 68"/>
+          <path d="M26 94Q62 116 100 98"/>
+        </g>
+        <circle class="orn o1" cx="52" cy="47" r="3.5" fill="#e01e3c"/>
+        <circle class="orn o2" cx="68" cy="50" r="3.5" fill="#5fb8ff"/>
+        <circle class="orn o3" cx="45" cy="72" r="4" fill="#f2c14e"/>
+        <circle class="orn o2" cx="64" cy="75" r="4" fill="#e01e3c"/>
+        <circle class="orn o1" cx="79" cy="69" r="4" fill="#ffffff"/>
+        <circle class="orn o3" cx="34" cy="100" r="4.5" fill="#5fb8ff"/>
+        <circle class="orn o1" cx="53" cy="96" r="4.5" fill="#f2c14e"/>
+        <circle class="orn o2" cx="72" cy="103" r="4.5" fill="#ffffff"/>
+        <circle class="orn o3" cx="88" cy="99" r="4.5" fill="#e01e3c"/>
+        <!-- regalos al pie del árbol -->
+        <rect x="24" y="110" width="22" height="16" rx="2" fill="#c8102e"/>
+        <path d="M33 110h4v16h-4zM24 116h22v4H24z" fill="#f2c14e"/>
+        <rect x="76" y="112" width="20" height="14" rx="2" fill="#f2c14e"/>
+        <path d="M84 112h4v14h-4zM76 117h20v3H76z" fill="#c8102e"/>
+        <polygon class="tree-star" points="60,2 63.8,12.7 75.2,13.1 66.2,20 69.4,30.9 60,24.5 50.6,30.9 53.8,20 44.8,13.1 56.2,12.7" fill="#ffd54f" stroke="#e0a91f" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      <p class="kicker">✨ Navidad 2026 ✨</p>
       <h1 id="title">Amigo Secreto</h1>
+      <p class="countdown" id="countdown" hidden></p>
     </header>
 
     <!-- Cargando -->
@@ -53,7 +126,7 @@
       <p class="hello">Hola, <strong class="js-name"></strong> 👋</p>
 
       <div id="draw-ready">
-        <p class="muted">Este link es <strong>solo tuyo</strong>. Toca el botón para descubrir a quién le vas a regalar.</p>
+        <p class="muted">Este link es <strong>solo tuyo</strong>. Toca el botón para descubrir a quién le vas a regalar esta Navidad.</p>
         <button id="btn-draw" class="gift-btn" type="button">
           <span class="gift-btn-icon" aria-hidden="true">🎁</span>
           Encuentra a tu amigo secreto
@@ -65,7 +138,7 @@
       </div>
 
       <div id="shuffle" class="shuffle" hidden>
-        <p class="muted shuffle-label" id="shuffle-label">Barajando nombres…</p>
+        <p class="muted shuffle-label" id="shuffle-label">🎅 Revolviendo los nombres en el gorro…</p>
         <div class="shuffle-card" id="shuffle-card"><span id="shuffle-name"></span></div>
         <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
       </div>
@@ -75,6 +148,7 @@
     <section id="screen-result" class="screen card center" hidden>
       <p class="hello" id="result-heading"></p>
       <button id="reveal-card" class="reveal-card" type="button" aria-live="polite"></button>
+      <p class="xmas-wish">🎄 ¡Prepárale un regalo con mucho cariño!</p>
       <p class="secret">🤫 ¡Es un secreto! No se lo cuentes a nadie.</p>
       <p class="muted small">Si lo olvidas, vuelve a abrir este mismo link: siempre te mostrará el mismo amigo secreto. No lo reenvíes, es solo tuyo.</p>
     </section>
@@ -86,7 +160,7 @@
       <button id="btn-retry" class="secondary-btn" type="button">Volver a intentar</button>
     </section>
 
-    <footer class="foot">Hecho con ❤️ para la familia</footer>
+    <footer class="foot">Hecho con ❤️ para la familia · Navidad 2026</footer>
   </main>
 
   <canvas id="confetti" aria-hidden="true"></canvas>
