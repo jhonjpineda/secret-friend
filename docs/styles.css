@@ -18,11 +18,13 @@
   /* moño dorado y ramita de acebo (SVG) */
   --bow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Cpath d='M28 20 16 36 21 35 23 39 31 21zM32 20 44 36 39 35 37 39 29 21z' fill='%23d99a22'/%3E%3Cpath d='M30 18C22 4 6 2 6 12s16 10 24 6zM30 18C38 4 54 2 54 12s-16 10-24 6z' fill='%23f2c14e' stroke='%23b9831c' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='30' cy='18' r='5' fill='%23ffd768' stroke='%23b9831c' stroke-width='2'/%3E%3C/svg%3E");
   --holly: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 54'%3E%3Cpath d='M35 26C28 15 16 9 3 13c5 3 4 7 2 10 5 0 7 3 7 7 5-2 9 0 11 4 3-4 7-6 12-8z' fill='%231f6f4a'/%3E%3Cpath d='M35 26C42 14 54 9 67 15c-5 3-4 7-2 10-5 0-7 3-7 7-5-2-9 0-11 4-3-4-7-6-12-10z' fill='%23185c3c'/%3E%3Cpath d='M35 26 6 14M35 26l29-10' stroke='%232fa36d' stroke-width='1.2' fill='none'/%3E%3Ccircle cx='30' cy='30' r='5.5' fill='%23d4142f'/%3E%3Ccircle cx='40' cy='30' r='5.5' fill='%23c20f29'/%3E%3Ccircle cx='35' cy='22' r='5.5' fill='%23e01e3c'/%3E%3Ccircle cx='33' cy='20' r='1.6' fill='%23fff' fill-opacity='.7'/%3E%3Ccircle cx='28' cy='28' r='1.6' fill='%23fff' fill-opacity='.7'/%3E%3Ccircle cx='38' cy='28' r='1.6' fill='%23fff' fill-opacity='.7'/%3E%3C/svg%3E");
-  color-scheme: light;
+  color-scheme: only light;
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+button { -webkit-appearance: none; appearance: none; -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
 
 body {
@@ -52,7 +54,7 @@ body {
 }
 
 /* ---------- cielo, paisaje y luces ---------- */
-.sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.sky { position: fixed; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .sky::after { /* luna */
   content: '';
   position: absolute;
@@ -156,7 +158,7 @@ body {
 .card {
   position: relative;
   background:
-    repeating-linear-gradient(45deg, var(--red) 0 12px, #fff 12px 24px) top / 100% 8px no-repeat,
+    repeating-linear-gradient(45deg, var(--red), var(--red) 12px, #fff 12px, #fff 24px) top / 100% 8px no-repeat,
     var(--card);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -202,7 +204,7 @@ p { margin: 0 0 10px; }
 .progress-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(45deg, var(--red) 25%, #fff 25% 50%, var(--red) 50% 75%, #fff 75%) 0 0 / 16px 16px;
+  background: linear-gradient(45deg, var(--red) 25%, #fff 25%, #fff 50%, var(--red) 50%, var(--red) 75%, #fff 75%) 0 0 / 16px 16px;
   border-radius: 99px;
   transition: width 0.6s ease;
   animation: candy 1s linear infinite;
@@ -215,7 +217,6 @@ p { margin: 0 0 10px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
   width: 100%;
   margin: 34px 0 8px;
   padding: 22px 18px 22px;
@@ -243,7 +244,7 @@ p { margin: 0 0 10px; }
   background: var(--bow) center / contain no-repeat;
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
 }
-.gift-btn-icon { font-size: 34px; }
+.gift-btn-icon { font-size: 34px; margin-right: 12px; }
 .gift-btn:active {
   transform: translateY(6px);
   box-shadow: inset 0 0 0 3px rgba(242, 193, 78, 0.55), 0 2px 0 #6b0716, 0 6px 12px rgba(150, 9, 31, 0.3);
@@ -292,14 +293,14 @@ p { margin: 0 0 10px; }
 .shuffle-card {
   color: #fff;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.22) 0 1.5px, transparent 2.5px) 0 0 / 26px 26px,
-    radial-gradient(circle, rgba(255, 255, 255, 0.14) 0 1px, transparent 2px) 13px 13px / 26px 26px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.22) 1.5px, transparent 2.5px) 0 0 / 26px 26px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.14) 1px, transparent 2px) 13px 13px / 26px 26px,
     linear-gradient(135deg, var(--green-hi), #12462f);
   box-shadow: inset 0 0 0 4px rgba(242, 193, 78, 0.45), 0 12px 30px rgba(18, 70, 47, 0.35);
 }
 .shuffle-card.tick span { display: inline-block; animation: tick 0.16s ease-out; }
-.dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
-.dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--red); animation: blink 1s infinite; }
+.dots { display: flex; justify-content: center; margin-top: 16px; }
+.dots i { width: 10px; height: 10px; margin: 0 4px; border-radius: 50%; background: var(--red); animation: blink 1s infinite; }
 .dots i:nth-child(2) { animation-delay: 0.2s; background: var(--green); }
 .dots i:nth-child(3) { animation-delay: 0.4s; background: var(--gold); }
 
@@ -329,13 +330,13 @@ p { margin: 0 0 10px; }
   cursor: pointer;
   min-height: 170px;
   place-items: end center;
-  padding-bottom: 18px;
+  padding: 20px 10px 18px;
   color: #fff;
-  font-size: 20px;
+  font-size: clamp(16px, 5vw, 20px);
   background:
-    linear-gradient(90deg, transparent calc(50% - 9px), var(--gold) calc(50% - 9px) calc(50% + 9px), transparent calc(50% + 9px)),
-    linear-gradient(180deg, transparent calc(38% - 8px), var(--gold) calc(38% - 8px) calc(38% + 8px), transparent calc(38% + 8px)),
-    repeating-linear-gradient(45deg, var(--red) 0 18px, var(--red-dark) 18px 36px);
+    linear-gradient(90deg, transparent calc(50% - 9px), var(--gold) calc(50% - 9px), var(--gold) calc(50% + 9px), transparent calc(50% + 9px)),
+    linear-gradient(180deg, transparent calc(38% - 8px), var(--gold) calc(38% - 8px), var(--gold) calc(38% + 8px), transparent calc(38% + 8px)),
+    repeating-linear-gradient(45deg, var(--red), var(--red) 18px, var(--red-dark) 18px, var(--red-dark) 36px);
   box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--red), 0 16px 40px rgba(150, 9, 31, 0.35);
 }
 .reveal-card.covered::before {
@@ -374,9 +375,9 @@ p { margin: 0 0 10px; }
 .spinner::before { content: '\2744\FE0E'; }
 .foot { text-align: center; color: #9fb0c9; font-size: 13px; margin-top: 8px; }
 
-#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
+#confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
 
-.snow { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.snow { position: fixed; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 .flake {
   position: absolute;
   top: -20px;
@@ -409,4 +410,18 @@ p { margin: 0 0 10px; }
 
 @media (max-width: 360px) {
   .gift-btn { font-size: 20px; }
+}
+
+/* Celulares con poca altura visible (iPhone SE/8, Android con barras): encabezado
+   más compacto para que el botón se vea sin tener que bajar. */
+@media (max-height: 760px) {
+  .app { padding-top: 52px; }
+  .tree { width: 62px; }
+  .kicker { margin-top: 4px; font-size: 12px; }
+  .brand { margin-bottom: 22px; }
+  .brand h1 { font-size: clamp(30px, 8.8vw, 46px); }
+  .countdown { margin-top: 8px; padding: 3px 14px; font-size: 13px; }
+  .sky::after { top: 58px; width: 30px; height: 30px; }
+  .card { padding-top: 30px; }
+  .hello { margin-bottom: 8px; }
 }

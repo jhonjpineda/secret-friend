@@ -179,7 +179,8 @@
       const tag = document.createElement('span');
       tag.className = 'cover-text';
       tag.textContent = '👀 Toca aquí para verlo';
-      card.replaceChildren(tag);
+      card.textContent = ''; // (replaceChildren no existe en iPhones con iOS 13 o anterior)
+      card.appendChild(tag);
       card.onclick = () => showResult(recipient, { fresh: true, already });
     } else {
       card.textContent = recipient;
