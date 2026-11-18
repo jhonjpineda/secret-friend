@@ -1,0 +1,9 @@
+node_modules/
+*.tmp
+.env
+.env.*
+
+# Datos personales de la familia: NO se suben a GitHub
+listado.jpeg
+participantes.txt
+*.local.txt

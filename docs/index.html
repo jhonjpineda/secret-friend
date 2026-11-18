@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Amigo Secreto</title>
+  <meta name="description" content="Abre tu link personal y descubre a quién le vas a regalar.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b1626">
+  <meta property="og:title" content="🎁 Amigo Secreto">
+  <meta property="og:description" content="Abre tu link personal y descubre a quién le vas a regalar.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="snow" aria-hidden="true"></div>
+
+  <main class="app">
+    <header class="brand">
+      <div class="brand-gift" aria-hidden="true">🎁</div>
+      <h1 id="title">Amigo Secreto</h1>
+    </header>
+
+    <!-- Cargando -->
+    <section id="screen-loading" class="screen card center">
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="muted">Abriendo tu regalo…</p>
+    </section>
+
+    <!-- Sin código en el link -->
+    <section id="screen-nolink" class="screen card center" hidden>
+      <h2>Este link está incompleto 🔗</h2>
+      <p class="muted">Abre el link personal que te enviaron por WhatsApp. Cada persona tiene el suyo.</p>
+    </section>
+
+    <!-- Código que no existe -->
+    <section id="screen-invalid" class="screen card center" hidden>
+      <h2>Este link no es válido 🤔</h2>
+      <p class="muted">Revisa que lo hayas abierto completo desde el mensaje de WhatsApp. Si sigue sin funcionar, pídele al organizador que te lo reenvíe.</p>
+    </section>
+
+    <!-- Página aún no conectada a la hoja -->
+    <section id="screen-setup" class="screen card center" hidden>
+      <h2>Todavía no empezamos ⏳</h2>
+      <p class="muted">El organizador aún está preparando el sorteo. Vuelve a intentarlo más tarde.</p>
+    </section>
+
+    <!-- Sacar -->
+    <section id="screen-draw" class="screen card center" hidden>
+      <p class="hello">Hola, <strong class="js-name"></strong> 👋</p>
+
+      <div id="draw-ready">
+        <p class="muted">Este link es <strong>solo tuyo</strong>. Toca el botón para descubrir a quién le vas a regalar.</p>
+        <button id="btn-draw" class="gift-btn" type="button">
+          <span class="gift-btn-icon" aria-hidden="true">🎁</span>
+          Encuentra a tu amigo secreto
+        </button>
+        <div class="progress">
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <p class="progress-text" id="progress-text"></p>
+        </div>
+      </div>
+
+      <div id="shuffle" class="shuffle" hidden>
+        <p class="muted shuffle-label">Barajando nombres…</p>
+        <div class="shuffle-card" id="shuffle-card"><span id="shuffle-name"></span></div>
+        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <!-- Resultado -->
+    <section id="screen-result" class="screen card center" hidden>
+      <p class="hello" id="result-heading"></p>
+      <button id="reveal-card" class="reveal-card" type="button" aria-live="polite"></button>
+      <p class="secret">🤫 ¡Es un secreto! No se lo cuentes a nadie.</p>
+      <p class="muted small">Si lo olvidas, vuelve a abrir este mismo link: siempre te mostrará el mismo amigo secreto. No lo reenvíes, es solo tuyo.</p>
+    </section>
+
+    <!-- Error -->
+    <section id="screen-error" class="screen card center" hidden>
+      <h2>¡Ups! 😕</h2>
+      <p id="error-text">Algo salió mal.</p>
+      <button id="btn-retry" class="secondary-btn" type="button">Volver a intentar</button>
+    </section>
+
+    <footer class="foot">Hecho con ❤️ para la familia</footer>
+  </main>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
