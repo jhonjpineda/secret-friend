@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@800;900&display=block">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    background:
+      radial-gradient(620px 380px at 50% 8%, rgba(242, 193, 78, 0.20), transparent 62%),
+      radial-gradient(1100px 620px at 50% -10%, #2c5185, transparent 66%),
+      linear-gradient(180deg, #15294a, #0a1a2f 78%);
+  }
+  .layer { position: absolute; inset: 0; }
+  .star { position: absolute; border-radius: 50%; background: #fff; }
+  .moon {
+    position: absolute; top: 92px; right: 64px; width: 64px; height: 64px; border-radius: 50%;
+    box-shadow: 15px 8px 0 0 #fdf1c7; filter: drop-shadow(0 0 16px rgba(253, 241, 199, 0.6)); transform: rotate(-12deg);
+  }
+  .lights {
+    position: absolute; top: 0; left: 0; right: 0; height: 70px; overflow: hidden;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='30'%3E%3Cpath d='M0 4Q37.5 34 75 4' fill='none' stroke='%23314e3b' stroke-width='3'/%3E%3C/svg%3E") repeat-x;
+  }
+  .lights i {
+    position: absolute; top: 23px; width: 16px; height: 26px; border-radius: 50%;
+    background: var(--c); box-shadow: 0 4px 18px 4px var(--c);
+  }
+  .lights i::before { content: ''; position: absolute; top: -6px; left: 3px; width: 10px; height: 9px; border-radius: 2px; background: #2f3d34; }
+
+  .tree { position: absolute; left: 58px; bottom: 58px; width: 250px; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5)); }
+  .gifts { position: absolute; right: 70px; bottom: 60px; width: 230px; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5)); }
+  .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 130px; }
+
+  main {
+    position: absolute; left: 290px; right: 290px; top: 74px; bottom: 96px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  }
+  .kicker { color: #f2c14e; font-weight: 900; font-size: 26px; letter-spacing: 0.24em; margin: 0 0 6px; }
+  h1 {
+    font-family: 'Mountains of Christmas', cursive; font-weight: 700; font-size: 96px; line-height: 0.98; margin: 0;
+    text-shadow: 0 5px 0 #96091f, 0 0 30px rgba(242, 193, 78, 0.35);
+  }
+  .ribbon { position: relative; display: inline-block; margin: 18px 0 0; padding: 4px 36px 10px;
+    font-family: 'Mountains of Christmas', cursive; font-weight: 700; font-size: 60px; line-height: 1.05; color: #ffe7a3;
+    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
+    background: linear-gradient(180deg, #e01e3c, #96091f); border-top: 3px solid #f2c14e; border-bottom: 3px solid #f2c14e;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4); }
+  .ribbon::before, .ribbon::after { content: ''; position: absolute; top: 16px; bottom: -16px; width: 36px; z-index: -1; background: #7d0719; }
+  .ribbon::before { left: -26px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 42% 50%); }
+  .ribbon::after { right: -26px; clip-path: polygon(0 0, 100% 0, 58% 50%, 100% 100%, 0 100%); }
+  .tagline { margin: 22px 0 0; font-weight: 800; font-size: 28px; color: #ffe7a3; }
+</style>
+</head>
+<body>
+  <div class="layer" id="stars"></div>
+  <div class="moon"></div>
+
+  <svg class="ground" viewBox="0 0 1200 130" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <g id="pino">
+        <path d="M0-42 9-28H5l8 13H7l9 15h-32l9-15h-6l8-13h-4z" fill="#123a28"/>
+        <path d="M0-42 5-34 2-33 0-35-2-33-5-34z" fill="#eef4fb"/>
+      </g>
+    </defs>
+    <path d="M0 62C120 62 210 30 360 34S600 66 760 52S1080 40 1200 62V130H0z" fill="#b9cce3"/>
+    <use href="#pino" transform="translate(470 50) scale(.9)"/>
+    <use href="#pino" transform="translate(500 52) scale(1.2)"/>
+    <use href="#pino" transform="translate(730 56) scale(1)"/>
+    <use href="#pino" transform="translate(760 54) scale(.75)"/>
+    <path d="M0 96C150 96 270 74 450 78S780 100 930 92S1140 96 1200 96V130H0z" fill="#eef4fb"/>
+  </svg>
+
+  <!-- Árbol grande a la izquierda -->
+  <svg class="tree" viewBox="0 0 120 130" aria-hidden="true">
+    <defs>
+      <radialGradient id="brillo"><stop offset="0" stop-color="#fff3b0" stop-opacity=".95"/><stop offset="1" stop-color="#f2c14e" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect x="53" y="106" width="14" height="16" rx="2" fill="#7a4a22"/>
+    <path d="M60 58 106 110H14z" fill="#1c6b45" stroke="#1c6b45" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M60 40 94 82H26z" fill="#23804f" stroke="#23804f" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M60 24 84 56H36z" fill="#2a8f60" stroke="#2a8f60" stroke-width="6" stroke-linejoin="round"/>
+    <g fill="none" stroke="#ffe7a3" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0 6">
+      <path d="M46 44Q60 54 74 42"/><path d="M38 66Q62 82 86 68"/><path d="M26 94Q62 116 100 98"/>
+    </g>
+    <circle cx="52" cy="47" r="3.5" fill="#e01e3c"/><circle cx="68" cy="50" r="3.5" fill="#5fb8ff"/>
+    <circle cx="45" cy="72" r="4" fill="#f2c14e"/><circle cx="64" cy="75" r="4" fill="#e01e3c"/><circle cx="79" cy="69" r="4" fill="#fff"/>
+    <circle cx="34" cy="100" r="4.5" fill="#5fb8ff"/><circle cx="53" cy="96" r="4.5" fill="#f2c14e"/><circle cx="72" cy="103" r="4.5" fill="#fff"/><circle cx="88" cy="99" r="4.5" fill="#e01e3c"/>
+    <polygon points="60,2 63.8,12.7 75.2,13.1 66.2,20 69.4,30.9 60,24.5 50.6,30.9 53.8,20 44.8,13.1 56.2,12.7" fill="#ffd54f" stroke="#e0a91f" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+
+  <!-- Regalos a la derecha -->
+  <svg class="gifts" viewBox="0 0 230 200" aria-hidden="true">
+    <rect x="8" y="96" width="120" height="100" rx="6" fill="#c8102e"/>
+    <path d="M60 96h16v100H60zM8 138h120v16H8z" fill="#f2c14e"/>
+    <rect x="136" y="120" width="88" height="76" rx="6" fill="#1f6f4a"/>
+    <path d="M172 120h14v76h-14zM136 152h88v12h-88z" fill="#ffd54f"/>
+    <rect x="34" y="34" width="80" height="62" rx="6" fill="#f2c14e"/>
+    <path d="M67 34h14v62H67zM34 58h80v12H34z" fill="#c8102e"/>
+    <g transform="translate(74 34)">
+      <path d="M0 0C-10-22-34-24-32-10-30 0-12 2 0 0zM0 0C10-22 34-24 32-10 30 0 12 2 0 0z" fill="#e01e3c" stroke="#96091f" stroke-width="3" stroke-linejoin="round"/>
+      <circle r="7" fill="#e01e3c" stroke="#96091f" stroke-width="3"/>
+    </g>
+    <g transform="translate(179 120)">
+      <path d="M0 0C-8-16-26-18-24-8-22 0-9 1 0 0zM0 0C8-16 26-18 24-8 22 0 9 1 0 0z" fill="#ffd54f" stroke="#c9962a" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle r="5.5" fill="#ffd54f" stroke="#c9962a" stroke-width="2.5"/>
+    </g>
+  </svg>
+
+  <div class="lights" id="lights"></div>
+
+  <main>
+    <p class="kicker">★ NAVIDAD 2026 ★</p>
+    <h1>Amigo Secreto<br>en Familia</h1>
+    <div class="ribbon">“Los Melvos”</div>
+    <p class="tagline">¿A quién le vas a regalar esta Navidad?</p>
+  </main>
+
+  <script>
+    // Estrellas (posiciones fijas con semilla) y luces
+    let seed = 7;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const stars = document.getElementById('stars');
+    for (let i = 0; i < 110; i++) {
+      const s = document.createElement('span');
+      const size = rnd() * 2.2 + 1;
+      s.className = 'star';
+      s.style.cssText = `left:${rnd() * 100}%;top:${rnd() * 78}%;width:${size}px;height:${size}px;opacity:${(rnd() * 0.6 + 0.3).toFixed(2)}`;
+      stars.append(s);
+    }
+    const colors = ['#ff4d5e', '#ffd54f', '#4ade80', '#60c3ff'];
+    const lights = document.getElementById('lights');
+    for (let i = 0; i < 17; i++) {
+      const b = document.createElement('i');
+      b.style.left = `${i * 75 + 29.5}px`;
+      b.style.setProperty('--c', colors[i % 4]);
+      lights.append(b);
+    }
+  </script>
+</body>
+</html>
